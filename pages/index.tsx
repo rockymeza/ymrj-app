@@ -1,5 +1,15 @@
-const HomePage = () => {
-  return <div>姨妈日记</div>
-}
+import { Box } from "theme-ui";
 
-export default HomePage
+import Layout from "../components/Layout";
+import useAuth from "../utils/useAuth";
+
+const HomePage = () => {
+  const auth = useAuth();
+  return (
+    <Layout>
+      <Box as="pre">{JSON.stringify(auth, null, 2)}</Box>
+    </Layout>
+  );
+};
+
+export default HomePage;
