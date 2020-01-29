@@ -1,7 +1,7 @@
 import * as React from "react";
 import firebase from "./firebase";
 
-const db = firebase.firestore();
+export const db = firebase.firestore();
 
 const useCollection = (
   queryFn,

@@ -1,7 +1,11 @@
-import { Box } from "theme-ui";
+import * as React from "react";
+import { Box, Button } from "@theme-ui/components";
+import { Formik, Form } from "formik";
 
-import useCollection from "../utils/useCollection";
+import useCollection, { db } from "../utils/useCollection";
+import firebase from "../utils/firebase";
 import Datetime from "./Datetime";
+import Field from "./Field";
 
 const PeriodsList = ({ uid }) => {
   const [periods, { isLoading }] = useCollection(
@@ -9,30 +13,74 @@ const PeriodsList = ({ uid }) => {
     [uid]
   );
 
+  const handleSubmit = React.useCallback(async ({ startedAt, endedAt }) => {
+    db.collection("periods").add({
+      uid,
+      startedAt: Date.parse(startedAt),
+      endedAt: Date.parse(endedAt)
+    });
+  }, []);
+
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Start</th>
-          <th>End</th>
-        </tr>
-      </thead>
-      <tbody>
-        {periods.map(periodDoc => {
-          const data = periodDoc.data();
-          return (
-            <tr key={periodDoc.id}>
+    <Formik
+      initialValues={{ startedAt: null, endedAt: null }}
+      onSubmit={handleSubmit}
+    >
+      <Form>
+        <table>
+          <thead>
+            <tr>
+              <th />
+              <th>Start</th>
+              <th>End</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            {periods.map(periodDoc => {
+              const data = periodDoc.data();
+              return (
+                <tr key={periodDoc.id}>
+                  <td />
+                  <td>
+                    <Datetime timestamp={data.startedAt} />
+                  </td>
+                  <td>
+                    <Datetime timestamp={data.endedAt} />
+                  </td>
+                  <td />
+                </tr>
+              );
+            })}
+            <tr>
+              <th>Add new</th>
               <td>
-                <Datetime timestamp={data.started_at} />
+                <Field
+                  id="PeriodsList-startedAt"
+                  label="Start date"
+                  name="startedAt"
+                  type="date"
+                  required
+                />
               </td>
               <td>
-                <Datetime timestamp={data.ended_at} />
+                <Field
+                  id="PeriodsList-startedAt"
+                  label="End date"
+                  name="endedAt"
+                  type="date"
+                />
+              </td>
+              <td>
+                <Button type="submit" variant="primary">
+                  +
+                </Button>
               </td>
             </tr>
-          );
-        })}
-      </tbody>
-    </table>
+          </tbody>
+        </table>
+      </Form>
+    </Formik>
   );
 };
 
