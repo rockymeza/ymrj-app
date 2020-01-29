@@ -23,7 +23,7 @@ const PeriodsList = ({ uid }) => {
 
   return (
     <Formik
-      initialValues={{ startedAt: null, endedAt: null }}
+      initialValues={{ startedAt: "", endedAt: "" }}
       onSubmit={handleSubmit}
     >
       <Form>
