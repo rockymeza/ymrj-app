@@ -2,14 +2,9 @@ import { NowRequest, NowResponse } from "@now/node";
 import { Twilio, twiml } from "twilio";
 import firebase from "firebase-admin";
 
-const decodeCreds = data => {
-  const json = Buffer.from(data, "base64").toString("ascii");
-  console.log(data);
-  return JSON.parse(json);
-};
-const gcloudCredentials = decodeCreds(process.env.GCLOUD_CREDENTIALS);
+import { decodeCreds } from "../../utils/secrets";
 
-console.log(gcloudCredentials);
+const gcloudCredentials = decodeCreds(process.env.GCLOUD_CREDENTIALS);
 
 firebase.initializeApp({
   credential: firebase.credential.cert(gcloudCredentials)

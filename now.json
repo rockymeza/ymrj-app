@@ -1,5 +1,11 @@
 {
+  "build": {
+    "env": {
+      "FIREBASE_CREDENTIALS": "@firebase_credentials"
+    }
+  },
   "env": {
+    "FIREBASE_CREDENTIALS": "@firebase_credentials",
     "TWILIO_ACCOUNT_SID": "@twilio_account_sid",
     "TWILIO_AUTH_TOKEN": "@twilio_auth_token"
   }

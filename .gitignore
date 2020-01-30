@@ -3,4 +3,4 @@ log
 node_modules
 tmp
 yarn-error.log
-.env
+.env*
