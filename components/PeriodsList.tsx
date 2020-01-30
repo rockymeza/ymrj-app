@@ -16,8 +16,8 @@ const PeriodsList = ({ uid }) => {
   const handleSubmit = React.useCallback(async ({ startedAt, endedAt }) => {
     db.collection("periods").add({
       uid,
-      startedAt: Date.parse(startedAt),
-      endedAt: Date.parse(endedAt)
+      startedAt: new Date(startedAt),
+      endedAt: new Date(endedAt)
     });
   }, []);
 
@@ -46,7 +46,7 @@ const PeriodsList = ({ uid }) => {
                     <Datetime timestamp={data.startedAt} />
                   </td>
                   <td>
-                    <Datetime timestamp={data.endedAt} />
+                    {data.endedAt && <Datetime timestamp={data.endedAt} />}
                   </td>
                   <td />
                 </tr>
